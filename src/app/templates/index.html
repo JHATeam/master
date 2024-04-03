@@ -19,19 +19,24 @@
 {% endif %}
 
 {% for job in jobs %}
-<div class="card">
+<div class="card"  onclick="redirectPage()">
     <div class="card-body">
         <h5 class="card-title">{{ job.title }} - {{job.id}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ job.company }} - {{ job.location }} - {{job.date}}</h6>
-        <p class="card-text">{{ job.description }}</p>
+        <!-- <p class="card-text">{{ job.description }}</p> -->
         <h6 class="card-subtitle mb-2 text-info">Summary</h6>
-        <p class="card-text">{{ job.summary }}</p>
+        <p class="card-text" href="{{ url_for('jobs.update_job', id=job.id) }}">{{ job.description }} </p>
         <a href="{{ url_for('jobs.update_job', id=job.id) }}" class="btn btn-primary">Edit Job</a>
         <a href="{{ url_for('jobs.delete_job', id=job.id) }}" class="btn btn-primary">Delete Job</a>
     </div>
 
 
 </div>
+<script>
+    function redirectPage() {
+        window.location.href = "{{ url_for('jobs.job_details', id=job.id) }}";
+    }
+</script>
 <br />
 {% endfor %}
 

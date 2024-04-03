@@ -101,6 +101,32 @@ def update_job(id):
     except:
         abort(404)
 
+@jobs_bp.route('/<int:id>/details', methods=['GET', 'POST'])
+def job_details(id):
+    try:
+        form = JobForm()
+        job = job_service.get_job(id)
+        if form.validate_on_submit():
+            new_job = {
+                'title': form.title.data,
+                'company': form.company.data,
+                'location': form.location.data,
+                'description': form.description.data,
+                'date': datetime.now().strftime('%Y-%m-%d')
+            }
+            job_service.update_job(id, new_job)
+            return redirect(url_for("jobs.get_all_jobs"))
+        if job:
+            form.title.data = job['title']
+            form.company.data = job['company']
+            form.location.data = job['location']
+            form.description.data = job['description']
+
+            return render_template('job_description.html', form=form, id=id)
+        else:
+            return redirect(url_for("jobs.get_all_jobs"))
+    except:
+        abort(404)
 
 @jobs_bp.route('/create', methods=['GET', 'POST'])
 def create_job():
