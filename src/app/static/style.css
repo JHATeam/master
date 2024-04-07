@@ -110,3 +110,16 @@ input[type="submit"] {
     align-self: start;
     min-width: 10em;
 }
+.card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Add hover effect */
+.card:hover {
+    background-color: #f0f0f0;
+}
